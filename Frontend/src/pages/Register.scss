@@ -1,0 +1,85 @@
+.register-section {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1rem;
+    background: #fff;
+    position: relative;
+
+    h1:first-child {
+       
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-align: center;
+    }
+
+    .middle {
+        flex:0.5;
+    }
+
+    h1:nth-of-type(2) {
+        margin: 2rem 0 1.5rem 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    form {
+        width: 100%;
+        max-width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        margin-bottom: 2rem;
+
+        input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: none;
+            border-radius: 12px;
+            background: #f6f0ec;
+            font-size: 1rem;
+            color: #333;
+            outline: none;
+            transition: box-shadow 0.2s;
+
+            &:focus {
+                box-shadow: 0 0 0 2px #e0e0e0;
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem 0;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+
+            &:hover {
+                background: #222;
+            }
+        }
+    }
+
+    // Bottom login text
+    // &::after {
+    //     content: "Already have an account? Login";
+    //     display: block;
+    //     width: 100%;
+    //     text-align: center;
+    //     color: #b3a9a0;
+    //     font-size: 1rem;
+    //     position: absolute;
+    //     bottom: 1.5rem;
+    //     left: 0;
+    // }
+}

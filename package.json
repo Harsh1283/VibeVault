@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "imagekit": "^6.0.0",
+    "mongoose": "^8.17.1",
+    "node-fetch": "^3.3.2"
+  }
+}

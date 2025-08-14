@@ -1,0 +1,133 @@
+/* Main search page container */
+.search-page {
+  background: #fff;
+  min-height: 100vh;
+  padding: 0 12px 72px 12px; /* Added padding-bottom to prevent overlap with nav */
+  box-sizing: border-box;
+  position: relative;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+/* Search bar styles */
+.search-bar-container {
+  margin: 16px 0 0 0;
+  position: relative;
+}
+.search-bar {
+  width: 100%;
+  padding: 12px 40px 12px 36px;
+  border: none;
+  border-radius: 12px;
+  background: #f3f3f3;
+  font-size: 1rem;
+  color: #222;
+  outline: none;
+  box-sizing: border-box;
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Now Playing Preview (uses NowPlaying component) */
+.now-playing-preview {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 72px;
+  background: #f6f6f6;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px 10px 10px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.04);
+  gap: 12px;
+  z-index: 99; /* Ensure it floats above the nav */
+}
+.song-cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.song-info {
+  flex: 1;
+  min-width: 0;
+}
+.song-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.song-artist {
+  font-size: 0.92rem;
+  color: #888;
+  margin-top: 2px;
+}
+.play-btn {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+}
+
+/* Bottom navigation bar */
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 56px;
+  z-index: 100;
+  box-shadow: 0 -2px 12px 0 rgba(0,0,0,0.03);
+}
+.nav-btn {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 48px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.nav-btn.active, .nav-btn:hover {
+  opacity: 1;
+}
+.bottom-nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+}
+.bottom-nav li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+}

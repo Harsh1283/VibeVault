@@ -1,0 +1,45 @@
+/* Navigation Bar Styles */
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  z-index: 100;
+  box-shadow: 0 -2px 12px 0 rgba(0,0,0,0.03);
+}
+.bottom-nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+}
+.bottom-nav li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  cursor: pointer;
+  color: #bbb;
+  font-size: 1.6rem;
+  transition: color 0.2s;
+}
+.bottom-nav li.active,
+.bottom-nav li:hover {
+  color: #111;
+}
+.bottom-nav i {
+  font-size: 1.7rem;
+  pointer-events: none;
+}

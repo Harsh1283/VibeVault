@@ -1,0 +1,83 @@
+.now-playing {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  overflow: hidden; /* so progress bg stays inside rounded corners */
+  background: #f7f7f7;
+  margin: 0.5rem;
+}
+
+/* Background fill for progress */
+.now-playing__progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #1ab9d833; /* Spotify green with transparency */
+  width: 0%;
+  transition: width 0.1s linear;
+  z-index: 0; /* stays behind content */
+}
+
+.now-playing__top {
+  display: flex;
+  gap:10px;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 1; /* content stays above progress */
+}
+
+.now-playing__img {
+  width: 50px;
+  height: 50px;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.now-playing__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.now-playing__title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #000;
+}
+
+.now-playing__artist {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.now-playing__play {
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.now-playing__play:hover {
+  background: #222;
+}

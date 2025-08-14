@@ -1,0 +1,88 @@
+/* Home.css - Updated styling for middle section and bottom bar */
+.home-section {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Main content container */
+.inner {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 0 160px 0; /* leave space for NowPlaying + bottom bar */
+  margin: 10px;
+}
+
+/* Song list styling */
+.song-list {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.song-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.song-image {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.song-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.song-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.song-artist {
+  font-size: 14px;
+  color: #888;
+}
+
+/* Floating NowPlaying bar above navigation (same style as Search page) */
+.now-playing-container,
+.now-playing {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 72px; /* keeps it above the nav */
+  background: #f6f6f6;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px 10px 10px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.04);
+  gap: 12px;
+  z-index: 99; /* floats above nav */
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Navigation bar fixed at bottom */
+.navigation-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 500px;
+  background-color: white;
+  border-top: 1px solid #ddd;
+}

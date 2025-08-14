@@ -1,0 +1,77 @@
+
+h1{
+    margin-top: 2rem;
+}
+
+.upload-title {
+  width: 100vw;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.upload-section {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.5rem 1rem 1rem 1rem;
+    background: #fff;
+    position: relative;
+}
+
+.upload-section form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.upload-section input {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: none;
+    border-radius: 12px;
+    background: #f6f0ec;
+    font-size: 1rem;
+    color: #333;
+    outline: none;
+    transition: box-shadow 0.2s;
+}
+
+.upload-section input:focus {
+    box-shadow: 0 0 0 2px #e0e0e0;
+}
+
+.upload-section button {
+    width: 100%;
+    padding: 1rem 0;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.upload-section button:hover {
+    background: #222;
+}
+
+.upload-div input[type="file"] {
+  background: #f6f0ec;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  color: #333;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}

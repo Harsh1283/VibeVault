@@ -1,0 +1,23 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  position: relative; /* needed for absolute centering */
+  padding: 8px 16px;
+  font-size: 20px;
+}
+
+.navbar__icon,
+.navbar__search {
+  width: 40px;            /* equal fixed width */
+  text-align: center;
+  flex-shrink: 0;         /* prevent shrinking */
+}
+
+.navbar__title {
+  position: absolute;     /* center relative to navbar */
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;              /* remove default h1 margins */
+}
