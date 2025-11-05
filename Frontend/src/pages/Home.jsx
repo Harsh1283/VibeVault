@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
 import NowPlaying from "../components/NowPlaying";
 import SongList from "../components/SongList";
-import "../pages/home.css";
+import "../pages/Home.css";
 import { useDispatch } from 'react-redux';
 import { setCurrentSong, setIsPlaying } from '../features/Now_playing/Now_playingSlice';
 import { Link } from 'react-router-dom';
