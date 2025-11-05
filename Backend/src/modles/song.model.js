@@ -15,8 +15,10 @@ const songSchema = new mongoose.Schema({
     audio:{
         type:String,
         required:true,
+    },
+    mood:{
+        type:String,
     }
 
 })
-let SongModel= mongoose.model("Song",songSchema);
-export default SongModel;
+export const Song=mongoose.model("Song",songSchema)

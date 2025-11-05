@@ -5,7 +5,6 @@ import './SongList.css';
 import { useDispatch,useSelector } from 'react-redux';
 import { getSongs } from '../features/song/songSlice';
 import { useEffect } from 'react';
-import { get } from 'mongoose';
 
 // export const songs = [
 //   {
@@ -72,13 +71,14 @@ const SongList = ({ onSongClick }) => {
   if (loading) {
     return <div>Loading songs...</div>;
   } else if (error) {
-   return <div>Error loading songs: {error?.msg || error || "Unknown error"}</div>;;
+   const message = typeof error === 'string' ? error : (error?.message || 'Unknown error');
+   return <div>Error loading songs: {message}</div>;
   }
   return (
     <div className="space-y-2 mt-4">
       {songs.map((song) => (
         <SongItem
-          key={song.id}
+          key={song._id || song.id}
           image={song.image}
           title={song.name}
           artist={song.artist}

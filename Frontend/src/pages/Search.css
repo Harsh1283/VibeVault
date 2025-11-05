@@ -32,6 +32,157 @@
   pointer-events: none;
 }
 
+/* AI Search Button */
+.ai-search-btn {
+  position: fixed;
+  right: 20px;
+  top: 60%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.ai-search-btn:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.ai-search-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Mood Search Modal */
+.mood-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.mood-modal {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mood-modal h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #222;
+  text-align: center;
+}
+
+.mood-modal p {
+  margin: 0 0 24px 0;
+  color: #666;
+  text-align: center;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.mood-input {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #f0f0f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #222;
+  outline: none;
+  background: rgba(255, 255, 255, 0.8);
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  transition: border-color 0.3s ease;
+}
+
+.mood-input:focus {
+  border-color: #667eea;
+}
+
+.mood-modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.cancel-btn, .search-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.cancel-btn:hover {
+  background: #e8e8e8;
+}
+
+.search-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.search-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.search-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mood Result Info */
+.mood-result-info {
+  margin: 16px 0;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.mood-result-info p {
+  margin: 0;
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.mood-result-info strong {
+  color: #667eea;
+  text-transform: capitalize;
+}
+
 /* Now Playing Preview (uses NowPlaying component) */
 .now-playing-preview {
   position: fixed;
@@ -131,3 +282,70 @@
   flex: 1;
   height: 100%;
 }
+
+/* Empty state (no songs found) */
+.empty-state {
+  margin: 40px auto;
+  max-width: 520px;
+  text-align: center;
+  padding: 28px 20px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.06);
+  border: 1px solid rgba(102, 126, 234, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.empty-state svg {
+  width: 96px;
+  height: 96px;
+}
+
+.empty-state h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #222;
+}
+
+.empty-message {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.empty-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.try-again-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.try-again-btn:hover { transform: translateY(-2px); }
+
+.upload-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #f5f7ff;
+  color: #334155;
+  text-decoration: none;
+  border: 1px solid rgba(102,126,234,0.06);
+  font-weight: 600;
+}
+
+.upload-link:hover { background: #eef2ff; }

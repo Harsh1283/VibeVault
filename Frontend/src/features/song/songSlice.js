@@ -6,9 +6,11 @@ const initialState = {
   currentSong: null,
   loading: false,
   error: null,
+  moodSearchResult: null,
+  detectedMood: null,
 };
 
-// Async thunk to fetch all songs
+// ✅ Fetch all songs
 export const getSongs = createAsyncThunk(
   'songs/getSongs',
   async (_, { rejectWithValue }) => {
@@ -16,33 +18,36 @@ export const getSongs = createAsyncThunk(
       const response = await axios.get('http://localhost:3000/songs/get', {
         withCredentials: true,
       });
-      console.log('songs', response.data.songs);
-      return response.data.songs;
-      
-      
+
+  console.log('getSongs response:', response.data);
+  // Active backend returns ApiResponse { statusCode, data, message }
+  return response.data.data || [];
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data || { message: 'Network error' });
     }
   }
 );
 
-// Async thunk to search for songs
+// ✅ Search songs by text
 export const songSearch = createAsyncThunk(
   'songs/songSearch',
   async (searchText, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/songs/search?text=${searchText}`,
+        `http://localhost:3000/songs/search?query=${encodeURIComponent(searchText)}`,
         { withCredentials: true }
       );
-      return response.data.songs;
+
+      console.log('songSearch response:', response.data);
+  // Backend returns ApiResponse with data array
+  return response.data.data || [];
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data || { message: 'Network error' });
     }
   }
 );
 
-// Async thunk to get a song by its ID
+// ✅ Get song by ID
 export const getSongById = createAsyncThunk(
   'songs/getSongById',
   async (songId, { rejectWithValue }) => {
@@ -51,9 +56,35 @@ export const getSongById = createAsyncThunk(
         `http://localhost:3000/songs/get-songs/${songId}`,
         { withCredentials: true }
       );
-      return response.data.song;
+
+  console.log('getSongById response:', response.data);
+  // Backend returns ApiResponse with data object
+  return response.data.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data || { message: 'Network error' });
+    }
+  }
+);
+
+// ✅ Search songs by mood (AI)
+export const searchSongsByMood = createAsyncThunk(
+  'songs/searchSongsByMood',
+  async (moodText, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/songs/mood',
+        { text: moodText },
+        { withCredentials: true }
+      );
+
+      console.log('searchSongsByMood response:', response.data);
+      // Backend returns ApiResponse with data = { mood, songs }
+      return {
+        songs: response.data.data?.songs || [],
+        detectedMood: response.data.data?.mood || null,
+      };
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: 'Network error' });
     }
   }
 );
@@ -64,6 +95,7 @@ export const songSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // 🎵 Get all songs
       .addCase(getSongs.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -76,6 +108,8 @@ export const songSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      // 🔍 Search songs
       .addCase(songSearch.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -88,6 +122,8 @@ export const songSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      // 🎧 Get song by ID
       .addCase(getSongById.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -99,6 +135,24 @@ export const songSlice = createSlice({
       .addCase(getSongById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      // 🧠 Search songs by mood
+      .addCase(searchSongsByMood.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.moodSearchResult = null;
+      })
+      .addCase(searchSongsByMood.fulfilled, (state, action) => {
+        state.loading = false;
+        state.songs = action.payload.songs;
+        state.moodSearchResult = action.payload;
+        state.detectedMood = action.payload.detectedMood;
+      })
+      .addCase(searchSongsByMood.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.moodSearchResult = null;
       });
   },
 });
