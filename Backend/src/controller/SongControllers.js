@@ -1,50 +1,68 @@
 import {Song} from "../modles/song.model.js";
 import {asyncHandler} from "../utils/asyncHandle.js"
 import  { ApiError } from "../utils/ApiError.js"
-import { uploadCloudinary } from "../utils/Cloudinary.js";
+import { uploadBufferToCloudinary } from "../utils/Cloudinary.js";
 import {ApiResponse} from "../utils/apiResponse.js"
 import { getMood } from "../services/mood.service.js";
 
-const uploadSong=asyncHandler(async(req,res)=>{
-    const {name,artist,mood}=req.body
+const uploadSong = asyncHandler(async (req, res) => {
+  const { name, artist, mood } = req.body;
 
-    if([name,artist,mood].some((field)=>{field?.trim()==""})
-    ){
-        throw new ApiError(400,"all fields are required")
+  // validation (fixed: return inside some)
+  if ([name, artist, mood].some((field) => !field || String(field).trim() === "")) {
+    throw new ApiError(400, "all fields are required");
+  }
+
+  // Because we use multer.memoryStorage(), files are in req.files[*].buffer
+  const audioBuffer = req.files?.audio?.[0]?.buffer;
+  const imageBuffer = req.files?.image?.[0]?.buffer;
+
+  if (!audioBuffer) {
+    throw new ApiError(400, "audio is not present");
+  }
+
+  // Upload directly from buffer to Cloudinary
+  let audioUpload;
+  try {
+    // use resourceType "video" for audio so cloudinary accepts it, or "auto"
+    audioUpload = await uploadBufferToCloudinary(audioBuffer, "songs", "video");
+  } catch (err) {
+    console.error("Audio upload failed:", err);
+    throw new ApiError(500, "Failed to upload audio");
+  }
+
+  let imageUpload = null;
+  if (imageBuffer) {
+    try {
+      imageUpload = await uploadBufferToCloudinary(imageBuffer, "songs", "image");
+    } catch (err) {
+      console.error("Image upload failed (continuing without image):", err);
+      // not fatal — proceed without image
+      imageUpload = null;
     }
-    let imageLocalPath
-    if(req.files && Array.isArray(req.files.image) && req.files.image.length > 0){
-        imageLocalPath=req.files.image[0].path
-    }
-    const audioLocalPath=req.files?.audio[0]?.path
+  }
 
-    if(!audioLocalPath){
-        throw new ApiError(400,"audio is not present")
-    }
-    const audio=await uploadCloudinary(audioLocalPath)
-    const image=await uploadCloudinary(imageLocalPath)
+  if (!audioUpload) {
+    throw new ApiError(500, "audio file is required");
+  }
 
-    if(!audio){
-        throw new ApiError(400,"audio file is required")
-    }
+  const newSong = await Song.create({
+    name,
+    artist,
+    image: imageUpload?.secure_url || "",
+    audio: audioUpload.secure_url,
+    mood,
+  });
 
-    const newSong=await Song.create({
-        name,
-        artist,
-        image:image?.url || "",
-        audio:audio.url,
-        mood
-    })
+  if (!newSong) {
+    throw new ApiError(500, "Something went wrong while adding Song");
+  }
 
-    if(!newSong){
-        throw new ApiError(500,"Something went wrong while adding Song")
-    }
-     return res
-     .status(201)
-     .json(new ApiResponse(201,newSong,"Song added successfully"))
+  return res
+    .status(201)
+    .json(new ApiResponse(201, newSong, "Song added successfully"));
+});
 
-
-})
 
 // fetch songs 
 const getAllSongs = asyncHandler(async (req, res) => {
