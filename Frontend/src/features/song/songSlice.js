@@ -1,6 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+// ✅ Create Axios instance once here
+const API = axios.create({
+  baseURL: import.meta.env.VITE_API_URL, // comes from your .env file
+  withCredentials: true, // allows cookies
+});
+
 const initialState = {
   songs: [],
   currentSong: null,
@@ -10,75 +16,57 @@ const initialState = {
   detectedMood: null,
 };
 
-// ✅ Fetch all songs
+// 🎵 Fetch all songs
 export const getSongs = createAsyncThunk(
   'songs/getSongs',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:3000/songs/get', {
-        withCredentials: true,
-      });
-
-  console.log('getSongs response:', response.data);
-  // Active backend returns ApiResponse { statusCode, data, message }
-  return response.data.data || [];
+      const response = await API.get('/songs/get');
+      console.log('getSongs response:', response.data);
+      return response.data.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: 'Network error' });
     }
   }
 );
 
-// ✅ Search songs by text
+// 🔍 Search songs by text
 export const songSearch = createAsyncThunk(
   'songs/songSearch',
   async (searchText, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/songs/search?query=${encodeURIComponent(searchText)}`,
-        { withCredentials: true }
+      const response = await API.get(
+        `/songs/search?query=${encodeURIComponent(searchText)}`
       );
-
       console.log('songSearch response:', response.data);
-  // Backend returns ApiResponse with data array
-  return response.data.data || [];
+      return response.data.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: 'Network error' });
     }
   }
 );
 
-// ✅ Get song by ID
+// 🎧 Get song by ID
 export const getSongById = createAsyncThunk(
   'songs/getSongById',
   async (songId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/songs/get-songs/${songId}`,
-        { withCredentials: true }
-      );
-
-  console.log('getSongById response:', response.data);
-  // Backend returns ApiResponse with data object
-  return response.data.data;
+      const response = await API.get(`/songs/get-songs/${songId}`);
+      console.log('getSongById response:', response.data);
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: 'Network error' });
     }
   }
 );
 
-// ✅ Search songs by mood (AI)
+// 🧠 Search songs by mood (AI)
 export const searchSongsByMood = createAsyncThunk(
   'songs/searchSongsByMood',
   async (moodText, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        'http://localhost:3000/songs/mood',
-        { text: moodText },
-        { withCredentials: true }
-      );
-
+      const response = await API.post('/songs/mood', { text: moodText });
       console.log('searchSongsByMood response:', response.data);
-      // Backend returns ApiResponse with data = { mood, songs }
       return {
         songs: response.data.data?.songs || [],
         detectedMood: response.data.data?.mood || null,
