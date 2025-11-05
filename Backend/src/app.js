@@ -8,7 +8,8 @@ const app=express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://vibevault.vercel.app"
+  "https://vibevault.vercel.app",
+  "https://vibe-vault-topaz.vercel.app"
 ];
 
 app.use(
