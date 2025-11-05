@@ -8,38 +8,41 @@ const Upload = () => {
   const [artistName, setartistName] = useState('');
   const [Audio, setAudio] = useState(null);
   const [ImageFile, setImageFile] = useState(null);
+  const [mood, setMood] = useState(''); // ✅ added mood state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!Audio) {
-      alert('attach audio file');
+      alert('Attach audio file');
       return;
     }
 
     const formData = new FormData();
-    formData.append('audio', Audio); // backend expects this key
+    formData.append('audio', Audio);
     formData.append('name', name);
     formData.append('artist', artistName);
+    formData.append('mood', mood); // ✅ send mood to backend
     if (ImageFile) formData.append('image', ImageFile);
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/songs/upload`, // use env var
+        `${import.meta.env.VITE_API_URL}/songs/upload`,
         formData,
         {
           withCredentials: true,
           headers: { 'Content-Type': 'multipart/form-data' },
         }
       );
+
       console.log(res.data);
       alert('Upload successful!');
       // reset form
       setname('');
       setartistName('');
+      setMood(''); // ✅ reset mood
       setAudio(null);
       setImageFile(null);
-      // if you need to reset file inputs visually you may also clear them via refs
     } catch (err) {
       console.error(err);
       alert('Upload failed');
@@ -49,10 +52,9 @@ const Upload = () => {
   return (
     <>
       <h1 className="upload-title">Upload Song</h1>
-      <section className=" upload-section">
+      <section className="upload-section">
         <div className="upload-div">
           <form onSubmit={handleSubmit}>
-            {/* audio input kept the same id so CSS stays */}
             <input
               type="file"
               name="Audiofile"
@@ -80,7 +82,16 @@ const Upload = () => {
               onChange={(e) => setartistName(e.target.value)}
             />
 
-            {/* replaced text URL with file input, kept id="url" so CSS selectors still match */}
+            {/* ✅ mood input (kept same styling with class/id conventions) */}
+            <input
+              type="text"
+              name="mood"
+              id="mood"
+              placeholder="Mood (e.g. happy, sad, chill)"
+              value={mood}
+              onChange={(e) => setMood(e.target.value)}
+            />
+
             <input
               type="file"
               name="ImageFile"
