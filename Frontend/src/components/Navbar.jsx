@@ -10,11 +10,11 @@ const Navbar = () => {
     <i className="ri-music-line"></i>
   </span>
 
-  <h1 className="navbar__title font-serif-bold">Stream</h1>
+  <h1 className="navbar__title font-serif-bold">VibeVault</h1>
 
-  <span className="navbar__search" role="img" aria-label="search">
+  {/* <span className="navbar__search" role="img" aria-label="search">
     <i className="ri-search-line"></i>
-  </span>
+  </span> */}
 </header>
 
   );

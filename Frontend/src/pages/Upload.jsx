@@ -8,7 +8,8 @@ const Upload = () => {
   const [artistName, setartistName] = useState('');
   const [Audio, setAudio] = useState(null);
   const [ImageFile, setImageFile] = useState(null);
-  const [mood, setMood] = useState(''); // ✅ added mood state
+  const [mood, setMood] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,11 +19,13 @@ const Upload = () => {
       return;
     }
 
+    setIsLoading(true);
+
     const formData = new FormData();
     formData.append('audio', Audio);
     formData.append('name', name);
     formData.append('artist', artistName);
-    formData.append('mood', mood); // ✅ send mood to backend
+    formData.append('mood', mood);
     if (ImageFile) formData.append('image', ImageFile);
 
     try {
@@ -37,15 +40,16 @@ const Upload = () => {
 
       console.log(res.data);
       alert('Upload successful!');
-      // reset form
       setname('');
       setartistName('');
-      setMood(''); // ✅ reset mood
+      setMood('');
       setAudio(null);
       setImageFile(null);
     } catch (err) {
       console.error(err);
       alert('Upload failed');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -55,19 +59,21 @@ const Upload = () => {
       <section className="upload-section">
         <div className="upload-div">
           <form onSubmit={handleSubmit}>
+            
+            {/* Custom Audio file input */}
+            <label htmlFor="file" className="file-label">
+              {Audio ? Audio.name : 'Choose Audio File'}
+            </label>
             <input
               type="file"
-              name="Audiofile"
               id="file"
-              placeholder="AudioFile"
               accept="audio/*"
+              style={{ display: 'none' }}
               onChange={(e) => setAudio(e.target.files[0])}
             />
 
             <input
               type="text"
-              name="songName"
-              id="songName"
               placeholder="Song Name"
               value={name}
               onChange={(e) => setname(e.target.value)}
@@ -75,33 +81,33 @@ const Upload = () => {
 
             <input
               type="text"
-              name="artistName"
-              id="artistName"
               placeholder="Artist Name"
               value={artistName}
               onChange={(e) => setartistName(e.target.value)}
             />
 
-            {/* ✅ mood input (kept same styling with class/id conventions) */}
             <input
               type="text"
-              name="mood"
-              id="mood"
               placeholder="Mood (e.g. happy, sad, chill)"
               value={mood}
               onChange={(e) => setMood(e.target.value)}
             />
 
+            {/* Custom Image file input */}
+            <label htmlFor="imageFile" className="file-label">
+              {ImageFile ? ImageFile.name : 'Choose Cover Image'}
+            </label>
             <input
               type="file"
-              name="ImageFile"
-              id="url"
-              placeholder="ImageUrl"
+              id="imageFile"
               accept="image/*"
+              style={{ display: 'none' }}
               onChange={(e) => setImageFile(e.target.files[0])}
             />
 
-            <button type="submit">Upload</button>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? 'Uploading...' : 'Upload'}
+            </button>
           </form>
         </div>
         <Navigation />

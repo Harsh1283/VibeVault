@@ -1,77 +1,149 @@
-
-h1{
-    margin-top: 2rem;
+/* ===== GENERAL HEADING STYLING ===== */
+h1 {
+  margin-top: 2rem;
 }
 
 .upload-title {
-  width: 100vw;
+  width: 100%;
   text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 0.5px;
 }
 
+/* ===== MAIN SECTION ===== */
 .upload-section {
-    min-height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0.5rem 1rem 1rem 1rem;
-    background: #fff;
-    position: relative;
+  min-height: calc(100vh - 56px); /* Account for navigation bar height */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: #fff;
+  position: relative;
+  padding: 2rem 1rem 80px 1rem; /* Added bottom padding for navigation space */
+  box-sizing: border-box;
+}
+
+/* ===== FORM STYLING ===== */
+.upload-div {
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .upload-section form {
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  box-sizing: border-box;
 }
 
+/* ===== INPUT FIELDS ===== */
 .upload-section input {
-    width: 100%;
-    padding: 1rem 1.2rem;
-    border: none;
-    border-radius: 12px;
-    background: #f6f0ec;
-    font-size: 1rem;
-    color: #333;
-    outline: none;
-    transition: box-shadow 0.2s;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  background: #f6f0ec;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+  transition: box-shadow 0.2s;
+  box-sizing: border-box;
 }
 
 .upload-section input:focus {
-    box-shadow: 0 0 0 2px #e0e0e0;
+  box-shadow: 0 0 0 2px #e0e0e0;
 }
 
-.upload-section button {
-    width: 100%;
-    padding: 1rem 0;
-    background: #111;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.upload-section button:hover {
-    background: #222;
-}
-
-.upload-div input[type="file"] {
+/* ===== CUSTOM FILE LABEL ===== */
+.file-label {
+  width: 100%;
   background: #f6f0ec;
   border-radius: 12px;
   padding: 1rem 1.2rem;
-  color: #333;
   font-size: 1rem;
-  margin-bottom: 1rem;
+  color: #777;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 3.2rem;
+}
+
+.file-label:hover {
+  background: #f2e7e1;
+  color: #333;
+}
+
+/* Optional: when a file is chosen */
+.file-label:has(+ input[type="file"]:not([value=""])) {
+  color: #333;
+  font-weight: 500;
+}
+
+/* ===== BUTTON ===== */
+.upload-section button {
+  width: 100%;
+  padding: 1rem 0;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.upload-section button:hover {
+  background: #222;
+}
+
+.upload-section button:disabled {
+  background: #888;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.upload-section button:disabled:hover {
+  background: #888;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .upload-div {
+    max-width: 100%;
+    padding: 0 1.5rem;
+  }
+
+  .upload-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .upload-div {
+    padding: 0 1rem;
+  }
+
+  .upload-section input,
+  .file-label {
+    font-size: 0.95rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .upload-title {
+    font-size: 1.6rem;
+  }
 }
