@@ -1,30 +1,29 @@
 import React, { useState } from 'react';
 import './Register.scss';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../features/auth/authSlice';
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.auth);
 
   // Two-way binding using useState
   const [UserName, setUserName] = useState('');
   const [Password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    axios.post("http://localhost:3000/auth/register",
-      { UserName, Password },
-      { withCredentials: true }
-    )
-    .then(response => {
-      console.log(response.data);
+    try {
+      const result = await dispatch(registerUser({ UserName, Password })).unwrap();
+      console.log(result);
       navigate('/');
-    })
-    .catch(error => {
+    } catch (error) {
       console.error("Registration error:", error);
-      alert("Registration failed. Try a different username.");
-    });
+      alert(error?.message || "Registration failed. Try a different username.");
+    }
   };
 
   return (
@@ -48,8 +47,12 @@ const Register = () => {
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Register</button>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Registering...' : 'Register'}
+          </button>
         </form>
+
+        {error && <p className="error-message" style={{color: 'red', marginTop: '10px'}}>{error?.message || 'Registration failed'}</p>}
 
         <footer className="login-footer">
           <span>

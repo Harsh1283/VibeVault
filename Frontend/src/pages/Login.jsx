@@ -10,9 +10,12 @@ const Login = () => {
   // Two-way binding using useState
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (event) => {
     event.preventDefault();
+
+    setIsLoading(true);
 
     try {
       const resultAction = await dispatch(loginUser({ username, password }));
@@ -23,6 +26,8 @@ const Login = () => {
       }
     } catch (error) {
       alert("Login failed. Please check your credentials.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -51,7 +56,9 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Log In</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Logging in...' : 'Log In'}
+          </button>
         </form>
       </main>
 
