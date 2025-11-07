@@ -63,6 +63,56 @@ h1 {
   box-shadow: 0 0 0 2px #e0e0e0;
 }
 
+/* ===== MOOD SELECTION STYLING ===== */
+.mood-container {
+  width: 100%;
+  background: #f6f0ec;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  box-sizing: border-box;
+}
+
+.mood-label {
+  display: block;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.mood-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+
+.mood-checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.mood-checkbox-label:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.mood-checkbox {
+  width: auto !important;
+  padding: 0 !important;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  accent-color: #111;
+}
+
+.mood-text {
+  font-size: 0.95rem;
+  color: #333;
+  user-select: none;
+}
+
 /* ===== CUSTOM FILE LABEL ===== */
 .file-label {
   width: 100%;
@@ -130,6 +180,15 @@ h1 {
   .upload-title {
     font-size: 1.8rem;
   }
+
+  .mood-checkboxes {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .mood-text {
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 400px) {
@@ -145,5 +204,17 @@ h1 {
 
   .upload-title {
     font-size: 1.6rem;
+  }
+
+  .mood-checkboxes {
+    grid-template-columns: 1fr;
+  }
+
+  .mood-container {
+    padding: 0.9rem 1rem;
+  }
+
+  .mood-text {
+    font-size: 0.85rem;
   }
 }

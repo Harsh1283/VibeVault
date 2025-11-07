@@ -8,8 +8,21 @@ const Upload = () => {
   const [artistName, setartistName] = useState('');
   const [Audio, setAudio] = useState(null);
   const [ImageFile, setImageFile] = useState(null);
-  const [mood, setMood] = useState('');
+  const [selectedMood, setSelectedMood] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const moods = [
+    'happy',
+    'sad',
+    'energetic',
+    'calm',
+    'romantic',
+    'nostalgic',
+    'melancholic',
+    'upbeat',
+    'peaceful',
+    'intense',
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +38,7 @@ const Upload = () => {
     formData.append('audio', Audio);
     formData.append('name', name);
     formData.append('artist', artistName);
-    formData.append('mood', mood);
+    formData.append('mood', selectedMood);
     if (ImageFile) formData.append('image', ImageFile);
 
     try {
@@ -42,7 +55,7 @@ const Upload = () => {
       alert('Upload successful!');
       setname('');
       setartistName('');
-      setMood('');
+      setSelectedMood('');
       setAudio(null);
       setImageFile(null);
     } catch (err) {
@@ -86,12 +99,27 @@ const Upload = () => {
               onChange={(e) => setartistName(e.target.value)}
             />
 
-            <input
-              type="text"
-              placeholder="Mood (e.g. happy, sad, chill)"
-              value={mood}
-              onChange={(e) => setMood(e.target.value)}
-            />
+            {/* Mood Checkboxes */}
+            <div className="mood-container">
+              <label className="mood-label">Select Mood:</label>
+              <div className="mood-checkboxes">
+                {moods.map((mood) => (
+                  <label key={mood} className="mood-checkbox-label">
+                    <input
+                      type="radio"
+                      name="mood"
+                      value={mood}
+                      checked={selectedMood === mood}
+                      onChange={(e) => setSelectedMood(e.target.value)}
+                      className="mood-checkbox"
+                    />
+                    <span className="mood-text">
+                      {mood.charAt(0).toUpperCase() + mood.slice(1)}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
 
             {/* Custom Image file input */}
             <label htmlFor="imageFile" className="file-label">
