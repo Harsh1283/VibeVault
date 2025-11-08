@@ -29,7 +29,7 @@ const Register = () => {
   return (
     <div>
       <section className='register-section'>
-        <h1>Sound Stream</h1>
+        <h1>VibeVault</h1>
 
         <div className="middle"></div>
         <h1>Create new Account</h1>

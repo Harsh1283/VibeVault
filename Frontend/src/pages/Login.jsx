@@ -35,7 +35,7 @@ const Login = () => {
     <div className="login-container">
       <header className="login-header">
         <span className="logo">▲</span>
-        <span className="brand">SoundStream</span>
+        <span className="brand">VibeVault</span>
       </header>
 
       <main className="login-main">
